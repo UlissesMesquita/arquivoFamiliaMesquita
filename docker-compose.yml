@@ -1,0 +1,45 @@
+version: '3.1'
+services: 
+  web:
+    restart: always
+    build: .
+    container_name: web-arquivo
+    volumes: 
+      - ./:/var/www/
+    depends_on: 
+      - db
+    networks:
+      - internal
+  
+  db:
+    image: postgres
+    restart: always
+    container_name: db-arquivo
+    ports:
+      - "5465:5432"
+    environment:
+      POSTGRES_USER: laravel
+      POSTGRES_PASSWORD: 123456
+      POSTGRES_DB: laravel
+    volumes: 
+    - "./.docker/dbdata:/var/lib/postgresql/data"
+    networks:
+      - internal
+
+  nginx:
+    build: ./.docker/nginx
+    restart: always
+    container_name: nginx-arquivo
+    ports:
+      - "9300:80"
+    volumes: 
+      - ./:/var/www
+    depends_on: 
+      - web
+    networks:
+      - internal
+  
+networks:
+  internal:
+    driver: bridge
+

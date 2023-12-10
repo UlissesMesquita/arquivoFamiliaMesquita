@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Arquivo;
 use Illuminate\Http\Request;
 
 class ArquivoController extends Controller
@@ -13,7 +14,9 @@ class ArquivoController extends Controller
      */
     public function index()
     {
-        //
+        $arquivo = Arquivo::all();
+
+        return compact('arquivo');
     }
 
     /**
@@ -23,7 +26,7 @@ class ArquivoController extends Controller
      */
     public function create()
     {
-        //
+        
     }
 
     /**

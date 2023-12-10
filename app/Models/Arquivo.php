@@ -13,6 +13,7 @@ class Arquivo extends Model
         'data_pagamento',
         'nome_conta',
         'descricao',
-        'status_pagamento'
+        'status_pagamento',
+        'categoria'
     ];
 }

@@ -19,6 +19,6 @@ class Arquivo extends Model
     ];
 
     public function anexos(): HasMany{
-        return $this->hasMany(Anexo::class, 'id_anexos', 'id_arquivos');
+        return $this->hasMany(Anexo::class, 'anexos_id', 'arquivos_id');
     }
 }

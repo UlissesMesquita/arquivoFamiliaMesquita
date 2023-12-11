@@ -15,6 +15,6 @@ class Anexo extends Model
     ];
 
     public function arquivo(): HasOne{
-        return $this->hasOne(Arquivo::class,'id_anexos', 'id_arquivos');
+        return $this->hasOne(Arquivo::class,'anexos_id', 'arquivos_id');
     }
 }

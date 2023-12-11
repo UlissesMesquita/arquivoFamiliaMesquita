@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Arquivo;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ArquivoController extends Controller
 {
@@ -37,7 +38,20 @@ class ArquivoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        DB::beginTransaction();
+
+        $arquivo = new Arquivo();
+        $arquivo->data_vencimento = $request->dataVenciamento;
+        $arquivo->data_pagamento = $request->dataPagamento;
+        $arquivo->nome_conta = $request->nomeConta;
+        $arquivo->categoria = $request->categoria;
+        $arquivo->descricao = $request->descricao;
+        $arquivo->status_pagamento = $request->statusPagamento;
+        $arquivo->save();
+        
+
+        DB::commit();
+
     }
 
     /**

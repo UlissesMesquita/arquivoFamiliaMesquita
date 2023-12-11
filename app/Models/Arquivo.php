@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Arquivo extends Model
 {
@@ -16,4 +17,8 @@ class Arquivo extends Model
         'status_pagamento',
         'categoria'
     ];
+
+    public function anexos(): HasMany{
+        return $this->hasMany(Anexo::class, 'id_anexos', 'id_arquivos');
+    }
 }

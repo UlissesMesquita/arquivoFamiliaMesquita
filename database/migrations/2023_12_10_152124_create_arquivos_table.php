@@ -23,6 +23,11 @@ return new class extends Migration
             $table->string("descricao")->comment("descricao conta");
             $table->boolean("status_pagamento")->comment("Status pagamento");
 
+
+            $table->unsignedBigInteger('id');
+ 
+            $table->foreign('id_arquivos')->references('id_anexos')->on('anexos');
+
             
 
             $table->timestamps();

@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\ArquivoController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,4 +18,3 @@ Route::get('/', function () {
 });
 
 
-Route::resource('arquivo', ArquivoController::class);

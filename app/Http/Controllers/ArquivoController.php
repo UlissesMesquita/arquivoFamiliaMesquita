@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ArquivoRequest;
 use App\Models\Anexo;
 use App\Models\Arquivo;
 use Illuminate\Http\Request;
@@ -38,7 +39,7 @@ class ArquivoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ArquivoRequest $request)
     {
 
 
@@ -50,8 +51,8 @@ class ArquivoController extends Controller
         DB::beginTransaction();
 
         $arquivos = Arquivo::create([
-            'data_vencimento' => $request->data_vencimento,
             'data_pagamento' => $request->data_pagamento,
+            'data_vencimento' => $request->data_vencimento,
             'nome_conta' => $request->nome_conta,
             'descricao' => $request->descricao,
             'status_pagamento' => $request->status_pagamento,

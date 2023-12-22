@@ -47,10 +47,6 @@ class ArquivoRequest extends FormRequest
             'categoria' => [
                 'string', 
                 'required'
-            ],
-            'file' => [
-                'required', 
-                'extensions:jpg,png, pdf'
             ]
         ];
     }

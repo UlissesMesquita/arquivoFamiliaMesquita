@@ -11,7 +11,8 @@ class Anexo extends Model
     use HasFactory;
     protected $fillable = [
         'nome_anexo',
-        'path_anexo'
+        'path_anexo',
+        'arquivos_id'
     ];
 
     public function arquivo(): HasOne{

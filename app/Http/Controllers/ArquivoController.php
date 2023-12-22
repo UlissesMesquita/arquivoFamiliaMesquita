@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Anexo;
 use App\Models\Arquivo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -39,17 +40,38 @@ class ArquivoController extends Controller
      */
     public function store(Request $request)
     {
-        $arquivo = new Arquivo();
+
+
+        $anexo = $request->file;
+        $anexo_name = $anexo->getClientOriginalName();
+
+
+   
         DB::beginTransaction();
 
-        $anexo = $request->anexo;
-        $arquivo->fill($request->all());
+        $arquivos = Arquivo::create([
+            'data_vencimento' => $request->data_vencimento,
+            'data_pagamento' => $request->data_pagamento,
+            'nome_conta' => $request->nome_conta,
+            'descricao' => $request->descricao,
+            'status_pagamento' => $request->status_pagamento,
+            'categoria' => $request->categoria
+        ]);
 
-        dd($request->all());
+        if ($request->hasFile('file')) {
 
+            $anexo_path = 'anexos/'. $anexo_name;
 
-        
-        
+            Storage::disk('local')->put($anexo_path, $anexo);
+
+            //Erro aqui
+            $anexos = Anexo::create([
+                'nome_anexo' => $anexo_name,
+                'path_anexo' => $anexo_path,
+                'arquivos_id' => $arquivos->id
+            ]);
+
+        }
 
         DB::commit();
 

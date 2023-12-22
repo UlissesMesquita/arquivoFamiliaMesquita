@@ -18,6 +18,9 @@ return new class extends Migration
             $table->string("nome_anexo");
             $table->string("path_anexo");
             $table->timestamps();
+
+
+            $table->foreignId('arquivos_id')->constrained()->onDelete('cascade');
         });
     }
 

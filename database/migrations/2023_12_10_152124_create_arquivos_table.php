@@ -23,8 +23,8 @@ return new class extends Migration
             $table->date("data_vencimento")->comment("data de vencimento");
             $table->date("data_pagamento")->comment("data do pagamento");
 
-            
-            $table->foreignId('arquivos_id')->constrained()->onDelete('cascade');
+            // $table->unsignedBigInteger('arquivos_id');
+
 
             $table->timestamps();
         });

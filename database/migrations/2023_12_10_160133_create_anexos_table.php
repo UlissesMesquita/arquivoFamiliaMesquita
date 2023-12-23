@@ -15,13 +15,14 @@ return new class extends Migration
     {
         Schema::create('anexos', function (Blueprint $table) {
             $table->id();
-            $table->string("nome_anexo");
-            $table->string("extensao_anexo");
-            $table->string("path_anexo");
-            $table->timestamps();
-
-
             $table->foreignId('arquivos_id')->constrained()->onDelete('cascade');
+
+            $table->string("nome_anexo");
+            $table->string("path_anexo");
+            $table->string("extensao_anexo");
+            $table->timestamps();
+            $table->softDeletes();
+
         });
     }
 

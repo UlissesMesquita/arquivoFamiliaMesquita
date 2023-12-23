@@ -28,7 +28,10 @@ class ArquivoRequest extends FormRequest
             'dataVencimento' => 'required|date',
             'nomeConta' => 'required|string|min:5|max:255',
             'descricao' => 'required|string|min:5|max:255',
-            'statusPagamento' => 'required|boolean',
+            'statusPagamento' => 'required|string|enum  {
+                case PAGO;
+                case PENDENTE;
+            }',
             'categoria' => 'required|string'
         ];
     }

@@ -131,6 +131,16 @@ class ArquivoController extends Controller
      */
     public function destroy($id)
     {
-        //
+        try {
+            DB::beginTransaction();
+            Arquivo::find($id)->delete();
+            Anexo::where('arquivos_id', $id)->delete();
+            DB::commit();
+        } catch (\Exception $e) {
+            return 'Error:'. $e;
+        }
+
+
+        
     }
 }

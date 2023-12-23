@@ -20,13 +20,10 @@ return new class extends Migration
             $table->string("descricao")->comment("descricao conta");
             $table->string("categoria")->comment("Nome da Categoria");
             $table->boolean("status_pagamento")->comment("Status pagamento");
-            $table->date("data_vencimento")->comment("data de vencimento");
             $table->date("data_pagamento")->comment("data do pagamento");
-
-            // $table->unsignedBigInteger('arquivos_id');
-
-
+            $table->date("data_vencimento")->comment("data de vencimento");
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

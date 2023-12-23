@@ -39,42 +39,51 @@ class ArquivoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ArquivoRequest $request)
     {
-
-
-        $anexo = $request->file;
-        $anexo_name = $anexo->getClientOriginalName();
-
-
    
-        DB::beginTransaction();
+        try {
 
-        $arquivos = Arquivo::create([
-            'data_pagamento' => $request->data_pagamento,
-            'data_vencimento' => $request->data_vencimento,
-            'nome_conta' => $request->nome_conta,
-            'descricao' => $request->descricao,
-            'status_pagamento' => $request->status_pagamento,
-            'categoria' => $request->categoria
-        ]);
+            DB::beginTransaction();
 
-        if ($request->hasFile('file')) {
-
-            $anexo_path = 'anexos/'. $anexo_name;
-
-            Storage::disk('local')->put($anexo_path, $anexo);
-
-            //Erro aqui
-            $anexos = Anexo::create([
-                'nome_anexo' => $anexo_name,
-                'path_anexo' => $anexo_path,
-                'arquivos_id' => $arquivos->id
+            $arquivos = Arquivo::create([
+                'data_pagamento' => $request->dataPagamento,
+                'data_vencimento' => $request->dataVencimento,
+                'nome_conta' => $request->nomeConta,
+                'descricao' => $request->descricao,
+                'status_pagamento' => $request->statusPagamento,
+                'categoria' => $request->categoria
             ]);
 
-        }
+            if ($request->hasFile('file')) {
 
-        DB::commit();
+                $anexo = $request->file;
+                foreach ($anexo as $anexoCont) {
+                    $anexoName = $anexoCont->getClientOriginalName();
+                    $anexoPath = 'anexos/'. $arquivos->id . '/' . $anexoName;
+                    Storage::disk('local')->put($anexoPath, $anexoName);
+                    $anexos = Anexo::create([
+                        'nome_anexo' => $anexoName,
+                        'path_anexo' => $anexoPath,
+                        'arquivos_id' => $arquivos->id
+                    ]);
+                } 
+            }
+
+            DB::commit();
+
+            return [
+                'code:' => 201,
+                'data:' => response()->json($arquivos)
+            ];
+
+        }
+        catch(\Exception $e){
+            return [
+                'code:' => 400,
+                'erro:' => $e
+            ];
+        }
 
     }
 

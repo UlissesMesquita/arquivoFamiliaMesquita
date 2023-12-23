@@ -24,15 +24,15 @@ class ArquivoRequest extends FormRequest
     public function rules()
     {
         return [
-            'data_pagamento' => [
+            'dataPagamento' => [
                 'date',
                 'required'
             ],
-            'data_vencimento' => [
+            'dataVencimento' => [
                 'date', 
                 'required'
             ],
-            'nome_conta' => [
+            'nomeConta' => [
                 'string', 
                 'required'
             ],
@@ -40,7 +40,7 @@ class ArquivoRequest extends FormRequest
                 'required', 
                 'string'
             ],
-            'status_pagamento' => [
+            'statusPagamento' => [
                 'boolean', 
                 'required'
             ],

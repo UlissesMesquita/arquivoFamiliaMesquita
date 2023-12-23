@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('anexos', function (Blueprint $table) {
             $table->id();
             $table->string("nome_anexo");
+            $table->string("extensao_anexo");
             $table->string("path_anexo");
             $table->timestamps();
 

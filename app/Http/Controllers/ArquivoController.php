@@ -39,7 +39,7 @@ class ArquivoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(ArquivoRequest $request)
+    public function store(Request $request)
     {
    
         try {
@@ -60,11 +60,13 @@ class ArquivoController extends Controller
                 $anexo = $request->file;
                 foreach ($anexo as $anexoCont) {
                     $anexoName = $anexoCont->getClientOriginalName();
+                    $anexoExt = $anexoCont->getClientOriginalExtension();
                     $anexoPath = 'anexos/'. $arquivos->id . '/' . $anexoName;
                     Storage::disk('local')->put($anexoPath, $anexoName);
                     $anexos = Anexo::create([
                         'nome_anexo' => $anexoName,
                         'path_anexo' => $anexoPath,
+                        'extensao_anexo' => '.'.$anexoExt,
                         'arquivos_id' => $arquivos->id
                     ]);
                 } 

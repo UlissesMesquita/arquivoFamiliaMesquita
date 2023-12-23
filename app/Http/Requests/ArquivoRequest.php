@@ -13,7 +13,7 @@ class ArquivoRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return false;
     }
 
     /**
@@ -21,33 +21,15 @@ class ArquivoRequest extends FormRequest
      *
      * @return array<string, mixed>
      */
-    public function rules()
+    public function rules(): array
     {
         return [
-            'dataPagamento' => [
-                'date',
-                'required'
-            ],
-            'dataVencimento' => [
-                'date', 
-                'required'
-            ],
-            'nomeConta' => [
-                'string', 
-                'required'
-            ],
-            'descricao' => [
-                'required', 
-                'string'
-            ],
-            'statusPagamento' => [
-                'boolean', 
-                'required'
-            ],
-            'categoria' => [
-                'string', 
-                'required'
-            ]
+            'dataPagamento' => 'required|date|',
+            'dataVencimento' => 'required|date',
+            'nomeConta' => 'required|string|min:5|max:255',
+            'descricao' => 'required|string|min:5|max:255',
+            'statusPagamento' => 'required|boolean',
+            'categoria' => 'required|string'
         ];
     }
 }

@@ -12,6 +12,7 @@ class Anexo extends Model
     protected $fillable = [
         'nome_anexo',
         'path_anexo',
+        'extensao_anexo',
         'arquivos_id'
     ];
 

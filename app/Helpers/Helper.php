@@ -5,17 +5,16 @@ use Illuminate\Database\Eloquent\Model;
 //Return Erro Global
 function globalException(Exception $e): array{
     return [
-        'code' => '404',
-        'erro:' => $e->getMessage(),
-        'linha:' => $e->getLine()
+        'code' => response()->status() ?? '400',
+        'message' => 'Bad Request',
+        'erro:' => response()->json()
     ];
 }
 
 //Response Methods
-function globalReponse(){
-    return response()->json([
-        'status'    => 'Ok',
-        'code'      => response()->getStatusCode() ??  200,
-        'data'      => response()->json()
-    ], response()->getStatusCode() ?? 200);
+function globalReponse(Model $data, Exception $e): array{
+    return [
+        'code' => response()->status() ?? '201',
+        'data:' => response()->json()
+    ];
 }

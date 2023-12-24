@@ -81,10 +81,7 @@ class ArquivoController extends Controller
 
         }
         catch(\Exception $e){
-            return [
-                'code:' => 400,
-                'erro:' => $e
-            ];
+            return globalException($e);
         }
 
     }
@@ -120,7 +117,54 @@ class ArquivoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        try {
+
+            DB::beginTransaction();
+
+            $arquivos = Arquivo::find($id)->update([
+                'data_pagamento' => $request->dataPagamento,
+                'data_vencimento' => $request->dataVencimento,
+                'nome_conta' => $request->nomeConta,
+                'descricao' => $request->descricao,
+                'status_pagamento' => $request->statusPagamento,
+                'categoria' => $request->categoria
+            ]);
+
+            if ($request->hasFile('file')) {
+
+                Storage::deleteDirectory($arquivos->id);
+
+                $anexo = $request->file;
+                foreach ($anexo as $anexoCont) {
+                    $anexoName = $anexoCont->getClientOriginalName();
+                    $anexoExt = $anexoCont->getClientOriginalExtension();
+
+
+
+                    $anexoPath = 'anexos/'. $arquivos->id . '/' . $anexoName;
+                    Storage::disk('local')->put($anexoPath, $anexoName);
+
+                    $anexos = Anexo::find($arquivos->id)->update([
+                        'nome_anexo' => $anexoName,
+                        'path_anexo' => $anexoPath,
+                        'extensao_anexo' => '.'.$anexoExt,
+                        'arquivos_id' => $arquivos->id
+                    ]);
+                } 
+            }
+
+            DB::commit();
+
+            return [
+                'code:' => 201,
+                'data:' => response()->json($arquivos)
+            ];
+
+        }
+        catch(\Exception $e){
+            return globalException($e);
+        }
+
     }
 
     /**
@@ -137,7 +181,7 @@ class ArquivoController extends Controller
             Anexo::where('arquivos_id', $id)->delete();
             DB::commit();
         } catch (\Exception $e) {
-            return 'Error:'. $e;
+            return globalException($e);
         }
 
 
